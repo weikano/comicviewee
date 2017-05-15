@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="all">
+        <item
+            android:id="@+id/nav_home"
+            android:title="@string/menu_home"
+            android:icon="@drawable/ic_nav_home"/>
+
+        <item
+            android:id="@+id/nav_doujin"
+            android:title="@string/menu_doujin"
+            android:icon="@drawable/ic_nav_doujin"/>
+        <item
+            android:id="@+id/nav_doujin_cn"
+            android:title="@string/menu_lang_ch" />
+        <item
+            android:id="@+id/nav_doujin_ja"
+            android:title="@string/menu_lang_ja" />
+        <item
+            android:id="@+id/nav_doujin_cg"
+            android:title="@string/menu_doujin_cg" />
+        <item
+            android:id="@+id/nav_doujin_cosplay"
+            android:title="@string/menu_doujin_cosplay" />
+
+
+        <item
+            android:icon="@drawable/ic_nav_booklet"
+            android:id="@+id/nav_boolet"
+            android:title="@string/menu_booklet" />
+        <item
+            android:id="@+id/nav_boolet_cn"
+            android:title="@string/menu_lang_ch" />
+        <item
+            android:id="@+id/nav_boolet_ja"
+            android:title="@string/menu_lang_ja" />
+
+
+        <item
+            android:icon="@drawable/ic_nav_magazine"
+            android:id="@+id/nav_magazine"
+            android:title="@string/menu_magazine"/>
+        <item
+            android:id="@+id/nav_magazine_cn"
+            android:title="@string/menu_lang_ch" />
+        <item
+            android:id="@+id/nav_magazine_ja"
+            android:title="@string/menu_lang_ja" />
+    </group>
+</menu>

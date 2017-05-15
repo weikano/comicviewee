@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">genterman</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="menu_home">首页</string>
+    <string name="menu_doujin">同人</string>
+    <string name="menu_lang_ch">中文</string>
+    <string name="menu_lang_ja">日文</string>
+    <string name="menu_doujin_cg">CG</string>
+    <string name="menu_doujin_cosplay">COSPLAY</string>
+    <string name="menu_offprint">单行本</string>
+    <string name="menu_booklet">单行本</string>
+    <string name="menu_magazine">杂志</string>
+</resources>
