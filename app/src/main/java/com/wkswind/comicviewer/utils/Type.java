@@ -5,7 +5,7 @@ import com.wkswind.comicviewer.R;
 /**
  * Created by �Ϸ粻�� on 2017/5/14.
  */
-public enum WNAcgType {
+public enum Type {
 
     HOME("/index.php"),
 
@@ -25,8 +25,8 @@ public enum WNAcgType {
     MAGAZINE_CN("/albums-index-cate-10.html"),
     MAGAZINE_JA("/albums-index-cate-14.html"),
     ;
-    private String index;
-    WNAcgType(String index) {
+    final String index;
+    Type(String index) {
         this.index = index;
     }
 
@@ -35,7 +35,7 @@ public enum WNAcgType {
         return index;
     }
 
-    public static WNAcgType menuIdToType(int id) {
+    public static Type menuIdToType(int id) {
         switch (id) {
             case R.id.nav_home:
                 return HOME;

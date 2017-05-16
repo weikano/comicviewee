@@ -1,6 +1,6 @@
 package com.wkswind.comicviewer.api;
 
-import com.wkswind.comicviewer.utils.WNAcgType;
+import com.wkswind.comicviewer.utils.Type;
 
 import io.reactivex.Observable;
 import okhttp3.HttpUrl;
@@ -19,7 +19,7 @@ public interface ViewerWNAcg {
     Observable<Response<ResponseBody>> home();
 
     @GET(value = "{type}")
-    Observable<Response<ResponseBody>> category(@Path("type") WNAcgType type);
+    Observable<Response<ResponseBody>> category(@Path("type") Type type);
 
     @GET(value = "{type}")
     Observable<Response<ResponseBody>> categoryWithPage(@Path("type") String index);

@@ -37,6 +37,10 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryViewHolder> {
         return holder;
     }
 
+    public List<GalleryItem> getDatas() {
+        return datas;
+    }
+
     @Override
     public void onBindViewHolder(GalleryViewHolder holder, int position) {
         holder.showItem(datas.get(position));

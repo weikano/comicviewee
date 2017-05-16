@@ -2,11 +2,15 @@ package com.wkswind.comicviewer.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
+import com.wkswind.comicviewer.utils.Type;
+
+import org.greenrobot.greendao.annotation.Convert;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.annotation.JoinProperty;
+import org.greenrobot.greendao.converter.PropertyConverter;
 
 /**
  * Created by Administrator on 2017/5/15.
@@ -18,7 +22,8 @@ public class GalleryItem implements Parcelable {
     private String background;
     private String title;
     private String info;
-    private String category;
+    @Convert(columnType = String.class, converter = TypeConverter.class)
+    private Type type;
     private boolean star;
 
     public boolean isStar() {
@@ -61,12 +66,12 @@ public class GalleryItem implements Parcelable {
         this.info = info;
     }
 
-    public String getCategory() {
-        return category;
+    public Type getType() {
+        return type;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setType(Type type) {
+        this.type = type;
     }
 
     @Override
@@ -80,7 +85,7 @@ public class GalleryItem implements Parcelable {
         dest.writeString(this.background);
         dest.writeString(this.title);
         dest.writeString(this.info);
-        dest.writeString(this.category);
+        dest.writeSerializable(this.type);
         dest.writeInt(this.star ? 1 : 0);
     }
 
@@ -96,18 +101,17 @@ public class GalleryItem implements Parcelable {
         this.background = in.readString();
         this.title = in.readString();
         this.info = in.readString();
-        this.category = in.readString();
+        this.type = (Type) in.readSerializable();
         this.star = in.readInt() == 1;
     }
 
-    @Generated(hash = 1994678801)
-    public GalleryItem(String index, String background, String title, String info, String category,
-            boolean star) {
+    @Generated(hash = 1117893131)
+    public GalleryItem(String index, String background, String title, String info, Type type, boolean star) {
         this.index = index;
         this.background = background;
         this.title = title;
         this.info = info;
-        this.category = category;
+        this.type = type;
         this.star = star;
     }
 
@@ -122,4 +126,41 @@ public class GalleryItem implements Parcelable {
             return new GalleryItem[size];
         }
     };
+
+    public static class TypeConverter implements PropertyConverter<Type, String> {
+
+        @Override
+        public Type convertToEntityProperty(String databaseValue) {
+            if(TextUtils.isEmpty(databaseValue)) {
+                return null;
+            }
+            for(Type type : Type.values()) {
+                if(TextUtils.equals(type.toString(), databaseValue)){
+                    return type;
+                }
+            }
+            return Type.HOME;
+        }
+
+        @Override
+        public String convertToDatabaseValue(Type entityProperty) {
+            return entityProperty == null ? Type.HOME.toString() : entityProperty.toString();
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        GalleryItem that = (GalleryItem) o;
+
+        return index != null ? index.equals(that.index) : that.index == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return index != null ? index.hashCode() : 0;
+    }
 }

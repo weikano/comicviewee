@@ -10,7 +10,7 @@
     <dimen name="cover_title_size">16sp</dimen>
     <dimen name="cover_info_size">12sp</dimen>
     <dimen name="cover_margin">4dp</dimen>
-    <dimen name="item_divider_size">4dp</dimen>
+    <dimen name="item_divider_size">8dp</dimen>
 
     <dimen name="cardview_elevation">2dp</dimen>
     <dimen name="cardview_elevation_max">6dp</dimen>
