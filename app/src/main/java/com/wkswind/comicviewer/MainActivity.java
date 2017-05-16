@@ -16,11 +16,9 @@ import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.support.design.widget.RxNavigationView;
 import com.wkswind.comicviewer.adapter.GalleryAdapter;
-import com.wkswind.comicviewer.api.ViewerWNAcg;
 import com.wkswind.comicviewer.base.BaseActivity;
 import com.wkswind.comicviewer.bean.GalleryItem;
 import com.wkswind.comicviewer.utils.ContentParser;
-import com.wkswind.comicviewer.utils.NetworkHelper;
 import com.wkswind.comicviewer.utils.UIEvent;
 import com.wkswind.comicviewer.utils.WNAcgType;
 
@@ -37,7 +35,6 @@ import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 import timber.log.Timber;
 
 public class MainActivity extends BaseActivity {
@@ -52,9 +49,12 @@ public class MainActivity extends BaseActivity {
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh_container);
         content = (RecyclerView) findViewById(R.id.content);
         content.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false));
-        DividerItemDecoration decoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-        decoration.setDrawable(getResources().getDrawable(R.drawable.item_divider));
-        content.addItemDecoration(decoration);
+        DividerItemDecoration verticalDivider = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        verticalDivider.setDrawable(getResources().getDrawable(R.drawable.item_divider_vertical));
+        DividerItemDecoration horizontalDivider = new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL);
+        horizontalDivider.setDrawable(getResources().getDrawable(R.drawable.item_divider_horizontal));
+        content.addItemDecoration(horizontalDivider);
+        content.addItemDecoration(verticalDivider);
 
         setSupportActionBar(toolbar);
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

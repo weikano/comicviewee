@@ -28,22 +28,20 @@ dependencies {
     compile "com.android.support:appcompat-v7:${System.properties['appcompat']}"
     compile "com.android.support:design:${System.properties['appcompat']}"
     compile "com.android.support:cardview-v7:${System.properties['appcompat']}"
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
-    compile 'org.jsoup:jsoup:1.10.2'
     compile "com.squareup.retrofit2:retrofit:${System.properties['retrofit']}"
     compile "com.squareup.retrofit2:adapter-rxjava2:${System.properties['retrofit']}"
-
-    compile 'com.jakewharton.rxbinding2:rxbinding-design:2.0.0'
-    compile 'com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:2.0.0'
-
-    compile 'org.greenrobot:greendao:3.2.2'
-
-    compile 'com.jakewharton.timber:timber:4.5.1'
 
 //    compile 'com.github.bumptech.glide:glide:3.7.0'
 //    compile 'com.github.bumptech.glide:okhttp3-integration:1.5.0'
     compile "com.facebook.fresco:fresco:${System.properties['fresco']}"
     compile "com.facebook.fresco:imagepipeline-okhttp3:${System.properties['fresco']}"
 
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
+    compile 'org.jsoup:jsoup:1.10.2'
+    compile 'com.jakewharton.rxbinding2:rxbinding-design:2.0.0'
+    compile 'com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:2.0.0'
+    compile 'org.greenrobot:greendao:3.2.2'
+    compile 'com.jakewharton.timber:timber:4.5.1'
+    compile 'com.android.support:support-v4:25.3.1'
     testCompile 'junit:junit:4.12'
 }
