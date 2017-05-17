@@ -8,12 +8,17 @@ import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFact
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.facebook.imagepipeline.listener.RequestListener;
 import com.facebook.imagepipeline.listener.RequestLoggingListener;
+import com.liulishuo.filedownloader.FileDownloader;
+import com.liulishuo.filedownloader.connection.FileDownloadUrlConnection;
+import com.liulishuo.filedownloader.services.DownloadMgrInitialParams;
+import com.liulishuo.filedownloader.util.FileDownloadLog;
 import com.wkswind.comicviewer.BuildConfig;
 import com.wkswind.comicviewer.bean.DaoMaster;
 import com.wkswind.comicviewer.utils.NetworkHelper;
 
 import org.greenrobot.greendao.database.Database;
 
+import java.net.Proxy;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -51,6 +56,13 @@ public class ViewerApplication extends Application {
         if(BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
+        FileDownloadLog.NEED_LOG = BuildConfig.DEBUG;
+
+        FileDownloader.init(this, new DownloadMgrInitialParams.InitCustomMaker()
+                .connectionCreator(new FileDownloadUrlConnection.Creator(new FileDownloadUrlConnection.Configuration()
+                        .connectTimeout(15_000)
+                .readTimeout(15_000)
+                .proxy(Proxy.NO_PROXY))));
 
     }
 }

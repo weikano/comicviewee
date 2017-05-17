@@ -21,7 +21,7 @@ android {
 }
 
 greendao {
-    schemaVersion 3
+    schemaVersion 4
 }
 
 dependencies {
@@ -40,12 +40,14 @@ dependencies {
     compile "com.facebook.fresco:fresco:${System.properties['fresco']}"
     compile "com.facebook.fresco:imagepipeline-okhttp3:${System.properties['fresco']}"
 
+
+
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
     compile 'org.jsoup:jsoup:1.10.2'
     compile 'com.jakewharton.rxbinding2:rxbinding-design:2.0.0'
     compile 'com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:2.0.0'
     compile 'org.greenrobot:greendao:3.2.2'
     compile 'com.jakewharton.timber:timber:4.5.1'
-    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.liulishuo.filedownloader:library:1.4.3'
     testCompile 'junit:junit:4.12'
 }

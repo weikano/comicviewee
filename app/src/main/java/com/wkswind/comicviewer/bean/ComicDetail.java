@@ -23,6 +23,16 @@ public class ComicDetail implements Parcelable {
     private String brief;
     private String index;
 
+    private String galleryId;
+
+    public String getGalleryId() {
+        return galleryId;
+    }
+
+    public void setGalleryId(String galleryId) {
+        this.galleryId = galleryId;
+    }
+
     public Long getId() {
         return id;
     }
@@ -102,6 +112,7 @@ public class ComicDetail implements Parcelable {
         dest.writeString(this.tags);
         dest.writeString(this.brief);
         dest.writeString(this.index);
+        dest.writeString(this.galleryId);
     }
 
     public ComicDetail() {
@@ -116,11 +127,12 @@ public class ComicDetail implements Parcelable {
         this.tags = in.readString();
         this.brief = in.readString();
         this.index = in.readString();
+        this.galleryId = in.readString();
     }
 
-    @Generated(hash = 471412110)
+    @Generated(hash = 147262810)
     public ComicDetail(Long id, String title, String downloadPageUrl, int page, String category, String tags,
-            String brief, String index) {
+            String brief, String index, String galleryId) {
         this.id = id;
         this.title = title;
         this.downloadPageUrl = downloadPageUrl;
@@ -129,6 +141,7 @@ public class ComicDetail implements Parcelable {
         this.tags = tags;
         this.brief = brief;
         this.index = index;
+        this.galleryId = galleryId;
     }
 
     public static final Parcelable.Creator<ComicDetail> CREATOR = new Parcelable.Creator<ComicDetail>() {

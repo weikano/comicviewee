@@ -1,4 +1,4 @@
-<android.support.v7.widget.RecyclerView
+<android.support.v4.view.ViewPager
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/viewer_content"
     android:layout_width="match_parent"

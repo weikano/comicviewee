@@ -155,12 +155,17 @@ public class GalleryItem implements Parcelable {
 
         GalleryItem that = (GalleryItem) o;
 
-        return index != null ? index.equals(that.index) : that.index == null;
+        if (!background.equals(that.background)) return false;
+        if (!title.equals(that.title)) return false;
+        return info.equals(that.info);
 
     }
 
     @Override
     public int hashCode() {
-        return index != null ? index.hashCode() : 0;
+        int result = background.hashCode();
+        result = 31 * result + title.hashCode();
+        result = 31 * result + info.hashCode();
+        return result;
     }
 }

@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="19" />
+        android:maxSdkVersion="18" />
 
     <application
         android:name=".base.ViewerApplication"
@@ -18,9 +18,10 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/Viewer.Home">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -38,6 +39,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.wkswind.comicviewer.MainActivity" />
         </activity>
+        <activity android:name=".DownloaderActivity"></activity>
     </application>
 
 </manifest>

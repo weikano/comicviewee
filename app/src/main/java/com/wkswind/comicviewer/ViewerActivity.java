@@ -1,20 +1,17 @@
 package com.wkswind.comicviewer;
 
 import android.annotation.SuppressLint;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.LinearSnapHelper;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
 
-import com.wkswind.comicviewer.adapter.ComicDetailAdapter;
+import com.wkswind.comicviewer.adapter.ComicDetailPagerAdapter;
 import com.wkswind.comicviewer.bean.ComicDetail;
 import com.wkswind.comicviewer.utils.ParamHelper;
 
@@ -81,17 +78,20 @@ public class ViewerActivity extends AppCompatActivity {
         }
     };
 
-    private RecyclerView content;
+//    private RecyclerView content;
+    private ViewPager content;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_viewer);
-        content = (RecyclerView) findViewById(R.id.viewer_content);
-        content.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        SnapHelper helper = new LinearSnapHelper();
-        helper.attachToRecyclerView(content);
+//        content = (RecyclerView) findViewById(R.id.viewer_content);
+//        content.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+//        SnapHelper helper = new LinearSnapHelper();
+//        helper.attachToRecyclerView(content);
+        content = (ViewPager) findViewById(R.id.viewer_content);
+        content.setOffscreenPageLimit(1);
         ComicDetail detail = ParamHelper.get(getIntent().getExtras(), ComicDetail.class);
-        content.setAdapter(new ComicDetailAdapter(this, detail));
+        content.setAdapter(new ComicDetailPagerAdapter(this, detail));
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
