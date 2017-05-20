@@ -2,8 +2,9 @@
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
-    android:layout_width="@dimen/cover_size"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    fresco:cardUseCompatPadding="true"
     fresco:cardCornerRadius="@dimen/cardview_default_radius"
     fresco:cardElevation="@dimen/cardview_elevation"
     fresco:cardMaxElevation="@dimen/cardview_elevation_max"
@@ -35,4 +36,11 @@
             android:layout_marginTop="@dimen/cover_margin"
             />
     </LinearLayout>
+    <CheckBox
+        android:id="@+id/ic_cover_"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@drawable/ic_cover_star"
+        android:layout_gravity="top|right"
+        android:layout_margin="@dimen/cover_margin"/>
 </android.support.v7.widget.CardView>

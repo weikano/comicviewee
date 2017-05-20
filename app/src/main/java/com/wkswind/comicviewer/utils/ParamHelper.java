@@ -8,6 +8,8 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import com.wkswind.comicviewer.DetailActivity;
+import com.wkswind.comicviewer.ViewerActivity;
+import com.wkswind.comicviewer.bean.ComicDetail;
 import com.wkswind.comicviewer.bean.GalleryItem;
 
 /**
@@ -26,6 +28,12 @@ public class ParamHelper {
 
     public static void openDetail(Context context, GalleryItem item) {
         Intent intent = new Intent(context, DetailActivity.class);
+        put(intent, item);
+        shot(context, intent);
+    }
+
+    public static void viewComic(Context context, ComicDetail item) {
+        Intent intent = new Intent(context, ViewerActivity.class);
         put(intent, item);
         shot(context, intent);
     }

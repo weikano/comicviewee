@@ -30,10 +30,15 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryViewHolder> {
         holder.setOnGalleryItemClickListener(new GalleryViewHolder.OnGalleryItemClickListener() {
             @Override
             public void onGalleryItemClick(int position) {
+//                ParamHelper.openDetail(context, datas.get(position));
                 ParamHelper.openDetail(context, datas.get(position));
             }
         });
         return holder;
+    }
+
+    public List<GalleryItem> getDatas() {
+        return datas;
     }
 
     @Override

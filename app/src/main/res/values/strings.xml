@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">genterman</string>
+    <string name="app_name">绅士漫画</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -14,4 +14,8 @@
     <string name="menu_offprint">单行本</string>
     <string name="menu_booklet">单行本</string>
     <string name="menu_magazine">杂志</string>
+
+    <string name="title_activity_viewer">ViewerActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>
