@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/page_indicator"
+    android:textSize="@dimen/cover_title_size"
+    android:textColor="@color/page_indicator"
+    tools:text="1"
+    android:gravity="center"
+    android:padding="@dimen/fab_margin"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:stateListAnimator="@drawable/page_indicator"/>

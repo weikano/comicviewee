@@ -9,6 +9,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,12 +19,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.support.design.widget.RxNavigationView;
+import com.jakewharton.rxbinding2.support.v7.widget.RecyclerViewScrollEvent;
+import com.jakewharton.rxbinding2.support.v7.widget.RxRecyclerView;
 import com.wkswind.comicviewer.adapter.GalleryAdapter;
+import com.wkswind.comicviewer.adapter.PageIndicatorAdapter;
 import com.wkswind.comicviewer.base.BaseActivity;
 import com.wkswind.comicviewer.bean.GalleryItem;
 import com.wkswind.comicviewer.bean.GalleryItemDao;
+import com.wkswind.comicviewer.rxext.RxPageIndicatorView;
 import com.wkswind.comicviewer.utils.ContentParser;
 import com.wkswind.comicviewer.utils.DatabaseHelper;
 import com.wkswind.comicviewer.utils.UIEvent;
@@ -56,8 +62,9 @@ import timber.log.Timber;
 
 public class MainActivity extends BaseActivity {
     private SwipeRefreshLayout refreshLayout;
-    private RecyclerView content;
+    private RecyclerView content, pageIndicator;
     private GalleryAdapter adapter;
+    private View pageContainer;
     @IdRes
     private int selectedMenuId = R.id.nav_home;
 
@@ -65,10 +72,18 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        pageContainer = findViewById(R.id.page_container);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh_container);
+        refreshLayout.setEnabled(false);
         content = (RecyclerView) findViewById(R.id.content);
         content.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false));
+
+        pageIndicator = (RecyclerView) findViewById(R.id.page_indicator);
+        pageIndicator.setLayoutManager(new LinearLayoutManager(this, GridLayoutManager.HORIZONTAL,false));
+        PageIndicatorAdapter pageAdapter = new PageIndicatorAdapter(this, 200);
+        pageIndicator.setAdapter(pageAdapter);
+
         DividerItemDecoration verticalDivider = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         verticalDivider.setDrawable(getResources().getDrawable(R.drawable.item_divider_vertical));
         DividerItemDecoration horizontalDivider = new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL);
@@ -86,6 +101,7 @@ public class MainActivity extends BaseActivity {
         toggle.syncState();
 
         final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
         addDisposable(RxNavigationView.itemSelections(navigationView).throttleFirst(200, TimeUnit.MILLISECONDS).observeOn(Schedulers.io()).flatMap(new Function<MenuItem, ObservableSource<UIEvent>>() {
             @Override
             public ObservableSource<UIEvent> apply(MenuItem menuItem) throws Exception {
@@ -106,6 +122,7 @@ public class MainActivity extends BaseActivity {
         }).observeOn(AndroidSchedulers.mainThread()).subscribeWith(new DisposableObserver<UIEvent>() {
             @Override
             public void onNext(UIEvent value) {
+                refreshLayout.setEnabled(value.loading());
                 refreshLayout.setRefreshing(value.loading());
                 if(value.loading()){
                     drawer.closeDrawer(GravityCompat.START);
