@@ -3,6 +3,7 @@ package com.wkswind.comicviewer.base;
 import android.app.Application;
 
 import com.facebook.cache.disk.DiskCacheConfig;
+import com.facebook.common.logging.FLog;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFactory;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
@@ -35,7 +36,7 @@ public class ViewerApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        FLog.setMinimumLoggingLevel(1);
         DiskCacheConfig disk = DiskCacheConfig.newBuilder(this)
                 .setBaseDirectoryPath(getExternalCacheDir())
                 .setMaxCacheSize(MAX_CACHE_SIZE)
