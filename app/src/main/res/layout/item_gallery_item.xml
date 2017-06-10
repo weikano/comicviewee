@@ -18,7 +18,7 @@
             android:id="@+id/cover_photo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            fresco:actualImageScaleType="centerCrop"
+            fresco:actualImageScaleType="fitCenter"
             fresco:viewAspectRatio="1"
             fresco:retryImage="@drawable/ic_reload"
             />
