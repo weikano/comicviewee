@@ -29,13 +29,11 @@ import java.util.List;
  */
 
 public class ComicDetailPagerAdapter extends PagerAdapter {
-    private final ComicDetail detail;
     private final ImageDecodeOptions options;
     private final List<File> files;
     private LayoutInflater inflater;
     public ComicDetailPagerAdapter(Context context, ComicDetail detail) {
         inflater = LayoutInflater.from(context);
-        this.detail = detail;
         options = ImageDecodeOptions.newBuilder().setBitmapConfig(Bitmap.Config.RGB_565).build();
         File dir = ContentParser.downloadDir(context, detail);
         files = Arrays.asList(dir.listFiles());
