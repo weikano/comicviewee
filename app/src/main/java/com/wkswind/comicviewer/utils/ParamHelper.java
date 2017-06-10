@@ -3,11 +3,14 @@ package com.wkswind.comicviewer.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.customtabs.CustomTabsIntent;
 
 import com.wkswind.comicviewer.DetailActivity;
+import com.wkswind.comicviewer.R;
 import com.wkswind.comicviewer.ViewerActivity;
 import com.wkswind.comicviewer.bean.ComicDetail;
 import com.wkswind.comicviewer.bean.GalleryItem;
@@ -33,9 +36,13 @@ public class ParamHelper {
     }
 
     public static void viewComic(Context context, ComicDetail item) {
-        Intent intent = new Intent(context, ViewerActivity.class);
-        put(intent, item);
-        shot(context, intent);
+//        Intent intent = new Intent(context, ViewerActivity.class);
+//        put(intent, item);
+//        shot(context, intent);
+        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+        builder.setToolbarColor(context.getResources().getColor(R.color.colorPrimary));
+        builder.setShowTitle(false);
+        CustomTabActivityHelper.openCustomTab((Activity) context, builder.build(), Uri.parse(ContentParser.wrapSlideUrl(item.getIndex())), null);
     }
 
     private static void shot(Context context, Intent intent) {

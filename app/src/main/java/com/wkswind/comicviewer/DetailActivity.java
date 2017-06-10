@@ -8,6 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.Button;
 
+import com.liulishuo.filedownloader.FileDownloader;
 import com.wkswind.comicviewer.base.BaseActivity;
 import com.wkswind.comicviewer.bean.ComicDetail;
 import com.wkswind.comicviewer.bean.ComicDetailDao;
@@ -40,13 +41,23 @@ import timber.log.Timber;
 
 public class DetailActivity extends BaseActivity {
     private SwipeRefreshLayout refreshContainer;
-    private Button enter;
+    private Button enter, btnDownload;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         refreshContainer = (SwipeRefreshLayout) findViewById(R.id.refresh_container);
         enter = (Button) findViewById(R.id.button);
+        btnDownload = (Button) findViewById(R.id.download);
+        btnDownload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ComicDetail detail = (ComicDetail) v.getTag();
+                if(detail != null) {
+                    FileDownloader.getImpl().create(detail.getDownloadPageUrl()).setPath(ContentParser.downloadPath(DetailActivity.this, detail)).start();
+                }
+            }
+        });
         enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,6 +67,7 @@ public class DetailActivity extends BaseActivity {
                 }
             }
         });
+
         final GalleryItem item = ParamHelper.get(getIntent().getExtras(), GalleryItem.class);
         getSupportActionBar().setTitle(item.getTitle());
         getSupportActionBar().setSubtitle(item.getInfo());
@@ -69,9 +81,11 @@ public class DetailActivity extends BaseActivity {
             @Override
             public void onNext(UIEvent value) {
                 enter.setEnabled(!value.loading());
+                btnDownload.setEnabled(!value.loading());
                 refreshContainer.setRefreshing(value.loading());
                 if(value.complete()) {
                     enter.setTag(value.getResponse());
+                    btnDownload.setTag(value.getResponse());
                     Timber.i("Response " + value.getResponse());
                 }
             }

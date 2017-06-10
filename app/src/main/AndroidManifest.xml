@@ -39,7 +39,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.wkswind.comicviewer.MainActivity" />
         </activity>
-        <activity android:name=".DownloaderActivity"></activity>
+        <activity android:name=".DownloaderActivity" />
+
     </application>
 
 </manifest>

@@ -1,6 +1,11 @@
 package com.wkswind.comicviewer.utils;
 
+import android.content.Context;
+import android.net.Uri;
+import android.os.Environment;
 import android.text.TextUtils;
+import android.webkit.MimeTypeMap;
+import android.webkit.URLUtil;
 
 import com.wkswind.comicviewer.api.ViewerWNAcg;
 import com.wkswind.comicviewer.bean.ComicDetail;
@@ -11,7 +16,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +67,8 @@ public class ContentParser {
         ComicDetail detail = new ComicDetail();
         Element userWrap = doc.getElementsByClass("userwrap").first();
         detail.setTitle(userWrap.select("h2").first().text());
-        detail.setDownloadPageUrl(doc.getElementsByClass("downloadbtn").first().attr("href"));
+        String downloadPageUrl = doc.getElementsByClass("downloadbtn").first().attr("href");
+        detail.setDownloadPageUrl(parseDownloadUrl(Jsoup.connect(wrapDownloadPage(downloadPageUrl)).get()));
         Element infoWrap = doc.getElementsByClass("asTBcell uwconn").first();
         Elements labels = infoWrap.select("label");
         int page = -1;
@@ -102,8 +110,25 @@ public class ContentParser {
         return detail;
     }
 
-    public static String parseDownloadUrl(Document doc) throws IOException {
+    private static String wrapDownloadPage(String downloadPage){
+        return ViewerWNAcg.URL.newBuilder().addEncodedPathSegment(downloadPage).build().toString();
+    }
+
+    public static String wrapSlideUrl(String url) {
+        return ViewerWNAcg.URL.newBuilder().addEncodedPathSegment(url.replace("index","slide")).build().toString();
+    }
+
+    private static String parseDownloadUrl(Document doc) throws IOException {
         return doc.getElementsByClass("down_btn").first().attr("href");
+    }
+
+    public static String downloadPath(Context context, ComicDetail detail) {
+        String url = detail.getDownloadPageUrl();
+        String title = detail.getTitle();
+        String extension = MimeTypeMap.getFileExtensionFromUrl(url);
+        File file = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), title+"."+extension);
+//        File file = new File(Environment.getExternalStorageDirectory(Environment.DIRECTORY_DOWNLOADS), Uri.parse(detail.getTitle()).getPath());
+        return file.getAbsolutePath();
     }
 
     private static void printLine(String tag){
