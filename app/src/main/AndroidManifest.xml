@@ -41,6 +41,9 @@
         </activity>
         <activity android:name=".DownloaderActivity" />
 
+        <service
+            android:name=".UnzipSerivce"
+            android:exported="false"/>
     </application>
 
 </manifest>

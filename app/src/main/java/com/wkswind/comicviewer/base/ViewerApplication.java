@@ -9,15 +9,17 @@ import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFact
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.facebook.imagepipeline.listener.RequestListener;
 import com.facebook.imagepipeline.listener.RequestLoggingListener;
+import com.liulishuo.filedownloader.BaseDownloadTask;
+import com.liulishuo.filedownloader.FileDownloadListener;
+import com.liulishuo.filedownloader.FileDownloadMonitor;
 import com.liulishuo.filedownloader.FileDownloader;
 import com.liulishuo.filedownloader.connection.FileDownloadUrlConnection;
+import com.liulishuo.filedownloader.model.FileDownloadStatus;
 import com.liulishuo.filedownloader.services.DownloadMgrInitialParams;
 import com.liulishuo.filedownloader.util.FileDownloadLog;
 import com.wkswind.comicviewer.BuildConfig;
-import com.wkswind.comicviewer.bean.DaoMaster;
+import com.wkswind.comicviewer.UnzipSerivce;
 import com.wkswind.comicviewer.utils.NetworkHelper;
-
-import org.greenrobot.greendao.database.Database;
 
 import java.net.Proxy;
 import java.util.HashSet;
@@ -29,7 +31,7 @@ import timber.log.Timber;
  * Created by Administrator on 2017/5/15.
  */
 
-public class ViewerApplication extends Application {
+public class ViewerApplication extends Application implements FileDownloadMonitor.IMonitor {
     private static final long MAX_CACHE_SIZE = 200 * 1024 * 1024; // 100M
     private static final long MAX_CACHE_SIZE_LOW = 50 * 1024 * 1024; // 100M
     private static final long MAX_CACHE_SIZE_LOWEST = 10 * 1024 * 1024; // 100M
@@ -58,6 +60,7 @@ public class ViewerApplication extends Application {
             Timber.plant(new Timber.DebugTree());
         }
         FileDownloadLog.NEED_LOG = BuildConfig.DEBUG;
+        FileDownloadMonitor.setGlobalMonitor(this);
 
         FileDownloader.init(this, new DownloadMgrInitialParams.InitCustomMaker()
                 .connectionCreator(new FileDownloadUrlConnection.Creator(new FileDownloadUrlConnection.Configuration()
@@ -65,5 +68,33 @@ public class ViewerApplication extends Application {
                 .readTimeout(15_000)
                 .proxy(Proxy.NO_PROXY))));
 
+    }
+
+    @Override
+    public void onRequestStart(int count, boolean serial, FileDownloadListener lis) {
+
+    }
+
+    @Override
+    public void onRequestStart(BaseDownloadTask task) {
+
+    }
+
+    @Override
+    public void onTaskBegin(BaseDownloadTask task) {
+
+    }
+
+    @Override
+    public void onTaskStarted(BaseDownloadTask task) {
+
+    }
+
+    @Override
+    public void onTaskOver(BaseDownloadTask task) {
+        if(task.getStatus() == FileDownloadStatus.completed) {
+            Timber.i("%s has finished", task.getTargetFilePath());
+            UnzipSerivce.unzip(this, task);
+        }
     }
 }

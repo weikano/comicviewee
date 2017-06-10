@@ -41,7 +41,7 @@ dependencies {
     compile "com.facebook.fresco:fresco:${System.properties['fresco']}"
     compile "com.facebook.fresco:imagepipeline-okhttp3:${System.properties['fresco']}"
 
-
+    compile "net.lingala.zip4j:zip4j:1.3.2"
 
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
     compile 'org.jsoup:jsoup:1.10.2'

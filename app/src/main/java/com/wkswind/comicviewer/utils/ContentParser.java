@@ -122,6 +122,11 @@ public class ContentParser {
         return doc.getElementsByClass("down_btn").first().attr("href");
     }
 
+    public static File downloadDir(Context context, ComicDetail detail) {
+        String title = detail.getTitle();
+        return new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), title);
+    }
+
     public static String downloadPath(Context context, ComicDetail detail) {
         String url = detail.getDownloadPageUrl();
         String title = detail.getTitle();

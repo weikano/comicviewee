@@ -20,7 +20,9 @@ import com.wkswind.comicviewer.R;
 import com.wkswind.comicviewer.bean.ComicDetail;
 import com.wkswind.comicviewer.utils.ContentParser;
 
-import okhttp3.HttpUrl;
+import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/5/17.
@@ -29,15 +31,18 @@ import okhttp3.HttpUrl;
 public class ComicDetailPagerAdapter extends PagerAdapter {
     private final ComicDetail detail;
     private final ImageDecodeOptions options;
+    private final List<File> files;
     private LayoutInflater inflater;
     public ComicDetailPagerAdapter(Context context, ComicDetail detail) {
         inflater = LayoutInflater.from(context);
         this.detail = detail;
         options = ImageDecodeOptions.newBuilder().setBitmapConfig(Bitmap.Config.RGB_565).build();
+        File dir = ContentParser.downloadDir(context, detail);
+        files = Arrays.asList(dir.listFiles());
     }
     @Override
     public int getCount() {
-        return detail.getPage();
+        return files.size();
     }
 
     @Override
@@ -50,8 +55,8 @@ public class ComicDetailPagerAdapter extends PagerAdapter {
         View view = inflater.inflate(R.layout.item_viewer, container, false);
         SimpleDraweeView image = (SimpleDraweeView) view.findViewById(R.id.viewer_page);
         image.getHierarchy().setProgressBarImage(new ProgressBarDrawable());
-        String url = ContentParser.pageUrl(detail, position+1).toString();
-        ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(url)).setImageDecodeOptions(options)
+//        String url = ContentParser.pageUrl(detail, position+1).toString();
+        ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.fromFile(files.get(position))).setImageDecodeOptions(options)
                 .setRotationOptions(RotationOptions.autoRotate()).setLocalThumbnailPreviewsEnabled(true)
                 .setLowestPermittedRequestLevel(ImageRequest.RequestLevel.FULL_FETCH)
                 .setProgressiveRenderingEnabled(false)

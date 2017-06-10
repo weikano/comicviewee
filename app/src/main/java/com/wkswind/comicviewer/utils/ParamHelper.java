@@ -36,9 +36,20 @@ public class ParamHelper {
     }
 
     public static void viewComic(Context context, ComicDetail item) {
-//        Intent intent = new Intent(context, ViewerActivity.class);
-//        put(intent, item);
-//        shot(context, intent);
+        if(!ContentParser.downloadDir(context, item).exists()) {
+            notCached(context, item);
+        }else {
+            useCache(context, item);
+        }
+    }
+
+    private static void useCache(Context context, ComicDetail item) {
+        Intent intent = new Intent(context, ViewerActivity.class);
+        put(intent, item);
+        shot(context, intent);
+    }
+
+    private static void notCached(Context context, ComicDetail item) {
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
         builder.setToolbarColor(context.getResources().getColor(R.color.colorPrimary));
         builder.setShowTitle(false);
