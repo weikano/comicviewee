@@ -46,6 +46,7 @@ public class DetailActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final GalleryItem item = ParamHelper.get(getIntent().getExtras(), GalleryItem.class);
         setContentView(R.layout.activity_detail);
         refreshContainer = (SwipeRefreshLayout) findViewById(R.id.refresh_container);
         enter = (Button) findViewById(R.id.button);
@@ -64,12 +65,12 @@ public class DetailActivity extends BaseActivity {
             public void onClick(View v) {
                 ComicDetail detail = (ComicDetail) v.getTag();
                 if(detail != null) {
-                    ParamHelper.viewComic(DetailActivity.this, detail);
+                    ParamHelper.viewComic(DetailActivity.this, detail, item);
                 }
             }
         });
 
-        final GalleryItem item = ParamHelper.get(getIntent().getExtras(), GalleryItem.class);
+
         getSupportActionBar().setTitle(item.getTitle());
         getSupportActionBar().setSubtitle(item.getInfo());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

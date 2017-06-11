@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
+import android.widget.SeekBar;
 
 import com.wkswind.comicviewer.adapter.ComicDetailPagerAdapter;
 import com.wkswind.comicviewer.bean.ComicDetail;
@@ -80,6 +81,7 @@ public class ViewerActivity extends AppCompatActivity {
 
 //    private RecyclerView content;
     private ViewPager content;
+    private SeekBar seekBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,10 +91,36 @@ public class ViewerActivity extends AppCompatActivity {
 //        SnapHelper helper = new LinearSnapHelper();
 //        helper.attachToRecyclerView(content);
         content = (ViewPager) findViewById(R.id.viewer_content);
-        content.setOffscreenPageLimit(1);
+        seekBar = (SeekBar) findViewById(R.id.viewer_seekbar);
+        content.setOffscreenPageLimit(3);
         ComicDetail detail = ParamHelper.get(getIntent().getExtras(), ComicDetail.class);
         content.setAdapter(new ComicDetailPagerAdapter(this, detail));
+        seekBar.setMax(content.getAdapter().getCount()-1);
+        content.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                seekBar.setProgress(position+1);
+            }
+        });
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if(fromUser) {
+                    content.setCurrentItem(progress);
+                }
+            }
 
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);

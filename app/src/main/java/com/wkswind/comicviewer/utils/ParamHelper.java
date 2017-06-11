@@ -35,11 +35,11 @@ public class ParamHelper {
         shot(context, intent);
     }
 
-    public static void viewComic(Context context, ComicDetail item) {
-        if(!ContentParser.downloadDir(context, item).exists()) {
+    public static void viewComic(Context context, ComicDetail detail, GalleryItem item) {
+        if(!ContentParser.downloadDir(context, detail).exists()) {
             notCached(context, item);
         }else {
-            useCache(context, item);
+            useCache(context, detail);
         }
     }
 
@@ -49,7 +49,7 @@ public class ParamHelper {
         shot(context, intent);
     }
 
-    private static void notCached(Context context, ComicDetail item) {
+    private static void notCached(Context context, GalleryItem item) {
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
         builder.setToolbarColor(context.getResources().getColor(R.color.colorPrimary));
         builder.setShowTitle(false);

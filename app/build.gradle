@@ -49,6 +49,6 @@ dependencies {
     compile 'com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:2.0.0'
     compile 'org.greenrobot:greendao:3.2.2'
     compile 'com.jakewharton.timber:timber:4.5.1'
-    compile 'com.liulishuo.filedownloader:library:1.4.3'
+    compile 'com.liulishuo.filedownloader:library:1.5.3'
     testCompile 'junit:junit:4.12'
 }

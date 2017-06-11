@@ -6,6 +6,7 @@ import android.content.Intent;
 
 import com.liulishuo.filedownloader.BaseDownloadTask;
 import com.liulishuo.filedownloader.FileDownloader;
+import com.wkswind.comicviewer.utils.NotificationHelper;
 
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
@@ -44,6 +45,7 @@ public class UnzipSerivce extends IntentService {
                 ZipFile zip = new ZipFile(source);
                 zip.extractAll(dest.getAbsolutePath());
                 sourceFile.delete();
+                NotificationHelper.showFinish(this.getApplicationContext(), dest);
             } catch (ZipException e) {
                 e.printStackTrace();
             }
