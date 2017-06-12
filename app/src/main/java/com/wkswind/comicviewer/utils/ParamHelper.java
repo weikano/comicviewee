@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.customtabs.CustomTabsIntent;
+import android.text.TextUtils;
+import android.widget.Toast;
 
 import com.wkswind.comicviewer.DetailActivity;
 import com.wkswind.comicviewer.R;
@@ -50,6 +52,11 @@ public class ParamHelper {
     }
 
     private static void notCached(Context context, GalleryItem item) {
+        String packageName = CustomTabsHelper.getPackageNameToUse(context);
+        if(TextUtils.isEmpty(packageName)){
+            Toast.makeText(context, "Please install chrome or download first", Toast.LENGTH_SHORT).show();
+            return;
+        }
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
         builder.setToolbarColor(context.getResources().getColor(R.color.colorPrimary));
         builder.setShowTitle(false);

@@ -1,9 +1,15 @@
 package com.wkswind.comicviewer;
 
+import android.content.ComponentName;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
+import android.support.customtabs.CustomTabsCallback;
+import android.support.customtabs.CustomTabsClient;
+import android.support.customtabs.CustomTabsServiceConnection;
+import android.support.customtabs.CustomTabsSession;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +21,8 @@ import com.wkswind.comicviewer.bean.ComicDetail;
 import com.wkswind.comicviewer.bean.ComicDetailDao;
 import com.wkswind.comicviewer.bean.GalleryItem;
 import com.wkswind.comicviewer.utils.ContentParser;
+import com.wkswind.comicviewer.utils.CustomTabActivityHelper;
+import com.wkswind.comicviewer.utils.CustomTabsHelper;
 import com.wkswind.comicviewer.utils.DatabaseHelper;
 import com.wkswind.comicviewer.utils.ParamHelper;
 import com.wkswind.comicviewer.utils.UIEvent;
@@ -43,9 +51,12 @@ import timber.log.Timber;
 public class DetailActivity extends BaseActivity {
     private SwipeRefreshLayout refreshContainer;
     private Button enter, btnDownload;
+    private CustomTabActivityHelper helper;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        helper = new CustomTabActivityHelper();
         final GalleryItem item = ParamHelper.get(getIntent().getExtras(), GalleryItem.class);
         setContentView(R.layout.activity_detail);
         refreshContainer = (SwipeRefreshLayout) findViewById(R.id.refresh_container);
@@ -102,6 +113,30 @@ public class DetailActivity extends BaseActivity {
 
             }
         }));
+
+//        CustomTabsClient.bindCustomTabsService(this, CustomTabsHelper.getPackageNameToUse(this), new CustomTabsServiceConnection() {
+//            private CustomTabsClient mClient;
+//            @Override
+//            public void onCustomTabsServiceConnected(ComponentName name, CustomTabsClient client) {
+//                mClient = client;
+//                mClient.warmup(0);
+//                CustomTabsSession session = client.newSession(new CustomTabsCallback());
+//                session.mayLaunchUrl(Uri.parse(ContentParser.wrapSlideUrl(item.getIndex())),null,null);
+//            }
+//
+//            @Override
+//            public void onServiceDisconnected(ComponentName name) {
+//                mClient = null;
+//            }
+//        });
+        helper.bindCustomTabsService(this);
+        helper.mayLaunchUrl(Uri.parse(ContentParser.wrapSlideUrl(item.getIndex())),null,null);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        helper.unbindCustomTabsService(this);
     }
 
     private Observable<UIEvent> loadFromDatabase(final GalleryItem item) {
